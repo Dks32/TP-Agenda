@@ -19,7 +19,7 @@ public class tpAgenda extends javax.swing.JFrame {
      */
     public tpAgenda() {
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/assets/icono.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/assets/contactos_128.png")).getImage());
     }
 
     /**
@@ -221,7 +221,7 @@ public class tpAgenda extends javax.swing.JFrame {
 
         labAutor.setFont(new java.awt.Font("Roboto Mono", 2, 10)); // NOI18N
         labAutor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icono_small.png"))); // NOI18N
+        labAutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/contactos_16.png"))); // NOI18N
         labAutor.setText("Programación III - Ismael Tolaba (2023)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;

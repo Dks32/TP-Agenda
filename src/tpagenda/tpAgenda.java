@@ -1,22 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package tpagenda;
 
-import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author alejandro
- */
+
 public class tpAgenda extends javax.swing.JFrame {
 
-    /**
-     * Creates new form tpAgenda
-     */
     public tpAgenda() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/assets/contactos_128.png")).getImage());
@@ -260,9 +249,7 @@ public class tpAgenda extends javax.swing.JFrame {
         System.out.println(opcion);
     }//GEN-LAST:event_botDelActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -290,7 +277,9 @@ public class tpAgenda extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new tpAgenda().setVisible(true);
+                tpAgenda agenda = new tpAgenda();
+                agenda.setVisible(true);
+                agenda.setLocationRelativeTo(null);
             }
         });
     }

@@ -28,16 +28,6 @@ public class tpAgenda extends javax.swing.JFrame {
         
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/assets/contactos_128.png")).getImage());
-        
-        // Prueba de registros
-        this.noms[0] = "Pedro";
-        this.tels[0] = "155808080";
-        this.emls[0] = "pedro@mail.com";
-        
-        this.noms[1] = "Carlos";
-        this.tels[1] = "155808081";
-        this.emls[1] = "carlos@mail.com";
-        
         cargar_registros();
     }
 
@@ -187,6 +177,7 @@ public class tpAgenda extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel1.add(entD, gridBagConstraints);
 
@@ -195,6 +186,7 @@ public class tpAgenda extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel1.add(entM, gridBagConstraints);
 
@@ -203,6 +195,7 @@ public class tpAgenda extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel1.add(entY, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -287,11 +280,49 @@ public class tpAgenda extends javax.swing.JFrame {
 
     private void botDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botDelActionPerformed
         // Eliminar registro
+        
+        // Si no se seleccionó ningun contacto termina la función
+        if(lstCnt.getSelectedValue() == null) return;
+        
         int opcion;
-        String nombre_contacto = "John Doe";
+        String nombre_contacto = lstCnt.getSelectedValue();
         
         opcion = JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar el contacto [" + nombre_contacto + "]?", "Eliminar Contacto", JOptionPane.OK_CANCEL_OPTION);
         System.out.println("Opción seleccionada: " + opcion);
+        
+        // Si la opción seleccionada no es la positiva salir de la funcion
+        if(opcion != 0) return;
+        
+        // Buscar indice del registro
+        int i = 0;
+        for(int r=0; r<tam; r++){
+            if(nombre_contacto.equals(this.noms[r])){
+                i = r;
+                break;
+            }
+        }
+        
+        // Eliminar el registro de las listas y reordenar listas
+        for(int r=i; (r-1)<tam; r++){
+            this.noms[r] = this.noms[r + 1];
+            this.tels[r] = this.tels[r + 1];
+            this.emls[r] = this.emls[r + 1];
+            this.dirs[r] = this.dirs[r + 1];
+            this.dias[r] = this.dias[r + 1];
+            this.mess[r] = this.mess[r + 1];
+            this.anis[r] = this.anis[r + 1];
+        }
+        
+        // Limpiar el registro final
+        this.noms[tam] = this.noms[tam + 1];
+        this.tels[tam] = this.tels[tam + 1];
+        this.emls[tam] = this.emls[tam + 1];
+        this.dirs[tam] = this.dirs[tam + 1];
+        this.dias[tam] = this.dias[tam + 1];
+        this.mess[tam] = this.mess[tam + 1];
+        this.anis[tam] = this.anis[tam + 1];
+        
+        cargar_registros();
     }//GEN-LAST:event_botDelActionPerformed
 
     private void lstCntValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCntValueChanged
@@ -299,7 +330,6 @@ public class tpAgenda extends javax.swing.JFrame {
         String registro;
         
         registro = lstCnt.getSelectedValue();
-        System.out.println(registro);
         
         mostrar_registro(registro);
     }//GEN-LAST:event_lstCntValueChanged
@@ -319,6 +349,9 @@ public class tpAgenda extends javax.swing.JFrame {
 
     private void botSavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botSavActionPerformed
         // Guardar nuevo registro
+        // TODO: 
+        //          - Permitir editar el nombre de un registro
+        //          - Guardar registros a un archivo de texto
         
         // Verificar si el registro ya existe y muestra un cuadro de texto
         for(int r=0; r<tam; r++){
@@ -385,7 +418,6 @@ public class tpAgenda extends javax.swing.JFrame {
     
     private void mostrar_registro(String registro){
         // Mostrar los campos del registro en los campos del formulario
-        System.out.println("Mostrando el registro de: " + registro);
         
         // Recorre la lista de registros para encontrar el seleccionado
         for(int r=0; r<tam; r++){

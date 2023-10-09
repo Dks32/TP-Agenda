@@ -28,6 +28,7 @@ public class tpAgenda extends javax.swing.JFrame {
         
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/assets/contactos_128.png")).getImage());
+        
         cargar_registros();
     }
 
@@ -303,7 +304,7 @@ public class tpAgenda extends javax.swing.JFrame {
         }
         
         // Eliminar el registro de las listas y reordenar listas
-        for(int r=i; (r-1)<tam; r++){
+        for(int r=i; (r+1)<tam; r++){
             this.noms[r] = this.noms[r + 1];
             this.tels[r] = this.tels[r + 1];
             this.emls[r] = this.emls[r + 1];
@@ -314,13 +315,13 @@ public class tpAgenda extends javax.swing.JFrame {
         }
         
         // Limpiar el registro final
-        this.noms[tam] = this.noms[tam + 1];
-        this.tels[tam] = this.tels[tam + 1];
-        this.emls[tam] = this.emls[tam + 1];
-        this.dirs[tam] = this.dirs[tam + 1];
-        this.dias[tam] = this.dias[tam + 1];
-        this.mess[tam] = this.mess[tam + 1];
-        this.anis[tam] = this.anis[tam + 1];
+        this.noms[tam-1] = null;
+        this.tels[tam-1] = null;
+        this.emls[tam-1] = null;
+        this.dirs[tam-1] = null;
+        this.dias[tam-1] = 0;
+        this.mess[tam-1] = 0;
+        this.anis[tam-1] = 0;
         
         cargar_registros();
     }//GEN-LAST:event_botDelActionPerformed
@@ -360,9 +361,11 @@ public class tpAgenda extends javax.swing.JFrame {
                 this.tels[r] = entTel.getText();
                 this.emls[r] = entEml.getText();
                 this.dirs[r] = entDir.getText();
-                this.dias[r] = Integer.parseInt(entD.getText());
-                this.mess[r] = Integer.parseInt(entM.getText());
-                this.anis[r] = Integer.parseInt(entY.getText());
+                if(isNumeric(entD.getText()) && isNumeric(entM.getText()) && isNumeric(entY.getText())){    
+                    this.dias[r] = Integer.parseInt(entD.getText());
+                    this.mess[r] = Integer.parseInt(entM.getText());
+                    this.anis[r] = Integer.parseInt(entY.getText());
+                }
                 cargar_registros();
                 return;
             }
@@ -438,6 +441,18 @@ public class tpAgenda extends javax.swing.JFrame {
                 entY.setText(String.valueOf(this.anis[r]));
             }
         }
+    }
+    
+    private boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
 

@@ -214,6 +214,11 @@ public class tpAgenda extends javax.swing.JFrame {
         jPanel1.add(spH, gridBagConstraints);
 
         botAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/account-plus.png"))); // NOI18N
+        botAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botAddActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 11;
@@ -223,6 +228,11 @@ public class tpAgenda extends javax.swing.JFrame {
         jPanel1.add(botAdd, gridBagConstraints);
 
         botSav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/content-save.png"))); // NOI18N
+        botSav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botSavActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 11;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -294,7 +304,38 @@ public class tpAgenda extends javax.swing.JFrame {
         mostrar_registro(registro);
     }//GEN-LAST:event_lstCntValueChanged
 
-    
+    private void botAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botAddActionPerformed
+        // Agregar registro
+        entNom.setText("");
+        entTel.setText("");
+        entEml.setText("");
+        entDir.setText("");
+        entD.setText("");
+        entM.setText("");
+        entY.setText("");
+        
+        entNom.requestFocus();
+    }//GEN-LAST:event_botAddActionPerformed
+
+    private void botSavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botSavActionPerformed
+        // Guardar nuevo registro
+        
+        // Verificar si el registro ya existe y muestra un cuadro de texto
+        for(int r=0; r<tam; r++){
+            if((entNom.getText().equals(this.noms[r]) || (this.noms[r] == null))){
+                this.noms[r] = entNom.getText();
+                this.tels[r] = entTel.getText();
+                this.emls[r] = entEml.getText();
+                this.dirs[r] = entDir.getText();
+                this.dias[r] = Integer.parseInt(entD.getText());
+                this.mess[r] = Integer.parseInt(entM.getText());
+                this.anis[r] = Integer.parseInt(entY.getText());
+                cargar_registros();
+                return;
+            }
+        }
+    }//GEN-LAST:event_botSavActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -333,9 +374,9 @@ public class tpAgenda extends javax.swing.JFrame {
         // Carga la lista de contactos
         DefaultListModel modelo = new DefaultListModel();
         
-        for(int i=0; i<tam; i++){
-            if (this.noms[i] != null){
-                modelo.addElement(this.noms[i]);
+        for(int r=0; r<tam; r++){
+            if (this.noms[r] != null){
+                modelo.addElement(this.noms[r]);
             }
         }
         

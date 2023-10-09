@@ -6,7 +6,8 @@ import javax.swing.JOptionPane;
 
 
 public class tpAgenda extends javax.swing.JFrame {
-    
+    static int tam = 10;  // indica el tamaño de la agenda (max num de registros)
+
     String[] noms;
     String[] tels;
     String[] emls;
@@ -17,13 +18,13 @@ public class tpAgenda extends javax.swing.JFrame {
     
     
     public tpAgenda() {
-        this.noms = new String[10];
-        this.tels = new String[10];
-        this.emls = new String[10];
-        this.dirs = new String[10];
-        this.dias = new int[10];
-        this.mess = new int[10];
-        this.anis = new int[10];
+        this.noms = new String[tam];
+        this.tels = new String[tam];
+        this.emls = new String[tam];
+        this.dirs = new String[tam];
+        this.dias = new int[tam];
+        this.mess = new int[tam];
+        this.anis = new int[tam];
         
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/assets/contactos_128.png")).getImage());
@@ -32,6 +33,10 @@ public class tpAgenda extends javax.swing.JFrame {
         this.noms[0] = "Pedro";
         this.tels[0] = "155808080";
         this.emls[0] = "pedro@mail.com";
+        
+        this.noms[1] = "Carlos";
+        this.tels[1] = "155808081";
+        this.emls[1] = "carlos@mail.com";
         
         cargar_registros();
     }
@@ -81,6 +86,11 @@ public class tpAgenda extends javax.swing.JFrame {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        lstCnt.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstCntValueChanged(evt);
+            }
         });
         jScrollPane1.setViewportView(lstCnt);
 
@@ -274,6 +284,16 @@ public class tpAgenda extends javax.swing.JFrame {
         System.out.println("Opción seleccionada: " + opcion);
     }//GEN-LAST:event_botDelActionPerformed
 
+    private void lstCntValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCntValueChanged
+        // Cambio en la selección de los registros
+        String registro;
+        
+        registro = lstCnt.getSelectedValue();
+        System.out.println(registro);
+        
+        mostrar_registro(registro);
+    }//GEN-LAST:event_lstCntValueChanged
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -313,14 +333,38 @@ public class tpAgenda extends javax.swing.JFrame {
         // Carga la lista de contactos
         DefaultListModel modelo = new DefaultListModel();
         
-        for(int i=0; i<10; i++){
+        for(int i=0; i<tam; i++){
             if (this.noms[i] != null){
                 modelo.addElement(this.noms[i]);
-                System.out.println(i + ": " + this.noms[i]);
             }
         }
         
         lstCnt.setModel(modelo);
+    }
+    
+    private void mostrar_registro(String registro){
+        // Mostrar los campos del registro en los campos del formulario
+        System.out.println("Mostrando el registro de: " + registro);
+        
+        // Recorre la lista de registros para encontrar el seleccionado
+        for(int r=0; r<tam; r++){
+            
+            // Si no quedan más registros válidos entonces salir del bucle
+            if(this.noms[r] == null){
+                break;
+            }
+            
+            // Mostrar los campos del registro
+            if(this.noms[r].equals(registro)){
+                entNom.setText(this.noms[r]);
+                entTel.setText(this.tels[r]);
+                entEml.setText(this.emls[r]);
+                entDir.setText(this.dirs[r]);
+                entD.setText(String.valueOf(this.dias[r]));
+                entM.setText(String.valueOf(this.mess[r]));
+                entY.setText(String.valueOf(this.anis[r]));
+            }
+        }
     }
 
 

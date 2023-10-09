@@ -6,11 +6,34 @@ import javax.swing.JOptionPane;
 
 
 public class tpAgenda extends javax.swing.JFrame {
-
+    
+    String[] noms;
+    String[] tels;
+    String[] emls;
+    String[] dirs;
+    int[] dias;
+    int[] mess;
+    int[] anis;
+    
+    
     public tpAgenda() {
+        this.noms = new String[10];
+        this.tels = new String[10];
+        this.emls = new String[10];
+        this.dirs = new String[10];
+        this.dias = new int[10];
+        this.mess = new int[10];
+        this.anis = new int[10];
+        
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/assets/contactos_128.png")).getImage());
-        limpiar_lista();
+        
+        // Prueba de registros
+        this.noms[0] = "Pedro";
+        this.tels[0] = "155808080";
+        this.emls[0] = "pedro@mail.com";
+        
+        cargar_registros();
     }
 
     /**
@@ -35,7 +58,7 @@ public class tpAgenda extends javax.swing.JFrame {
         entEml = new javax.swing.JTextField();
         lblDir = new javax.swing.JLabel();
         entDir = new javax.swing.JTextField();
-        lblNac = new javax.swing.JLabel();
+        lblFec = new javax.swing.JLabel();
         entD = new javax.swing.JTextField();
         entM = new javax.swing.JTextField();
         entY = new javax.swing.JTextField();
@@ -141,12 +164,12 @@ public class tpAgenda extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel1.add(entDir, gridBagConstraints);
 
-        lblNac.setText("Nacimiento:");
+        lblFec.setText("Fecha:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        jPanel1.add(lblNac, gridBagConstraints);
+        jPanel1.add(lblFec, gridBagConstraints);
 
         entD.setColumns(5);
         entD.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -286,9 +309,17 @@ public class tpAgenda extends javax.swing.JFrame {
         });
     }
     
-    public void limpiar_lista(){
-        // Limpia la lista de contactos
+    private void cargar_registros(){
+        // Carga la lista de contactos
         DefaultListModel modelo = new DefaultListModel();
+        
+        for(int i=0; i<10; i++){
+            if (this.noms[i] != null){
+                modelo.addElement(this.noms[i]);
+                System.out.println(i + ": " + this.noms[i]);
+            }
+        }
+        
         lstCnt.setModel(modelo);
     }
 
@@ -309,7 +340,7 @@ public class tpAgenda extends javax.swing.JFrame {
     private javax.swing.JLabel labAutor;
     private javax.swing.JLabel lblDir;
     private javax.swing.JLabel lblEml;
-    private javax.swing.JLabel lblNac;
+    private javax.swing.JLabel lblFec;
     private javax.swing.JLabel lblNom;
     private javax.swing.JLabel lblTel;
     private javax.swing.JList<String> lstCnt;

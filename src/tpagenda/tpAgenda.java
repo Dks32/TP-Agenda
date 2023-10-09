@@ -1,5 +1,6 @@
 package tpagenda;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -9,6 +10,7 @@ public class tpAgenda extends javax.swing.JFrame {
     public tpAgenda() {
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/assets/contactos_128.png")).getImage());
+        limpiar_lista();
     }
 
     /**
@@ -246,7 +248,7 @@ public class tpAgenda extends javax.swing.JFrame {
         String nombre_contacto = "John Doe";
         
         opcion = JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar el contacto [" + nombre_contacto + "]?", "Eliminar Contacto", JOptionPane.OK_CANCEL_OPTION);
-        System.out.println(opcion);
+        System.out.println("Opción seleccionada: " + opcion);
     }//GEN-LAST:event_botDelActionPerformed
 
     
@@ -283,6 +285,13 @@ public class tpAgenda extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void limpiar_lista(){
+        // Limpia la lista de contactos
+        DefaultListModel modelo = new DefaultListModel();
+        lstCnt.setModel(modelo);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botAdd;
@@ -307,4 +316,5 @@ public class tpAgenda extends javax.swing.JFrame {
     private javax.swing.JSeparator spH;
     private javax.swing.JSeparator spV;
     // End of variables declaration//GEN-END:variables
+    String[] personas = new String[10];
 }

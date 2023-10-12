@@ -1,5 +1,10 @@
 package tpagenda;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -15,6 +20,8 @@ public class tpAgenda extends javax.swing.JFrame {
     int[] dias;
     int[] mess;
     int[] anis;
+	
+	String archivo_registros = "tp_agenda.reg";
     
     
     public tpAgenda() {
@@ -28,7 +35,7 @@ public class tpAgenda extends javax.swing.JFrame {
         
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/assets/contactos_128.png")).getImage());
-        
+        cargar();
         cargar_registros();
     }
 
@@ -289,7 +296,6 @@ public class tpAgenda extends javax.swing.JFrame {
         String nombre_contacto = lstCnt.getSelectedValue();
         
         opcion = JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar el contacto [" + nombre_contacto + "]?", "Eliminar Contacto", JOptionPane.OK_CANCEL_OPTION);
-        System.out.println("Opción seleccionada: " + opcion);
         
         // Si la opción seleccionada no es la positiva salir de la funcion
         if(opcion != 0) return;
@@ -354,7 +360,7 @@ public class tpAgenda extends javax.swing.JFrame {
         //          - Permitir editar el nombre de un registro
         //          - Guardar registros a un archivo de texto
         
-        // Verificar si el registro ya existe y muestra un cuadro de texto
+        // Verificar si el registro ya existe
         for(int r=0; r<tam; r++){
             if((entNom.getText().equals(this.noms[r]) || (this.noms[r] == null))){
                 this.noms[r] = entNom.getText();
@@ -367,9 +373,10 @@ public class tpAgenda extends javax.swing.JFrame {
                     this.anis[r] = Integer.parseInt(entY.getText());
                 }
                 cargar_registros();
-                return;
+                break;
             }
         }
+		guardar();
     }//GEN-LAST:event_botSavActionPerformed
 
     public static void main(String args[]) {
@@ -454,6 +461,74 @@ public class tpAgenda extends javax.swing.JFrame {
         }
         return true;
     }
+	
+	private void guardar() {
+		// Guarda el contenido de la agenda en un archivo
+		FileWriter archivo = null;
+		PrintWriter pw;
+		
+		try {
+			archivo = new FileWriter(this.archivo_registros);
+			pw = new PrintWriter(archivo);
+			
+			for (int i=0; i<tam; i++) {
+				if (this.noms[i]!=null){
+					pw.println(this.noms[i] + "|" + this.tels[i] + "|" + this.emls[i] + "|" + this.dirs[i] + "|" + this.dias[i] + "|" + this.mess[i] + "|" + this.anis[i]);
+				}
+			}
+			
+			System.out.println("Se guardó el archivo");
+			
+		} catch (Exception e) {
+			//e.printStackTrace();
+		} finally {
+			try {
+				if (null != archivo) {
+					archivo.close();
+				}
+			} catch (Exception e2) {
+				//e2.printStackTrace();
+			}
+		}
+	}
+	
+	
+	private void cargar() {
+		// Carga el contenido de la agenda del archivo "registro.txt"
+		File archivo = null;
+		FileReader fr = null;
+		BufferedReader br = null;
+		
+		try {
+			archivo = new File(this.archivo_registros);
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+			
+			String linea;
+			int i = 0;
+			while((linea=br.readLine())!=null){
+				String[] valores = linea.split("[|]");
+				this.noms[i] = valores[0];
+				this.tels[i] = valores[1];
+				this.emls[i] = valores[2];
+				this.dirs[i] = valores[3];
+				this.dias[i] = Integer.parseInt(valores[4]);
+				this.mess[i] = Integer.parseInt(valores[5]);
+				this.anis[i] = Integer.parseInt(valores[6]);
+				i++;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(null!=fr){
+					fr.close();
+				}
+			} catch(Exception e2){
+				e2.printStackTrace();
+			}
+		}
+	}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -479,5 +554,5 @@ public class tpAgenda extends javax.swing.JFrame {
     private javax.swing.JSeparator spH;
     private javax.swing.JSeparator spV;
     // End of variables declaration//GEN-END:variables
-    String[] personas = new String[10];
+    //String[] personas = new String[10];
 }

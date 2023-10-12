@@ -330,6 +330,7 @@ public class tpAgenda extends javax.swing.JFrame {
         this.anis[tam-1] = 0;
         
         cargar_registros();
+        guardar();
     }//GEN-LAST:event_botDelActionPerformed
 
     private void lstCntValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCntValueChanged
